@@ -1,0 +1,38 @@
+=== 1. Urgent + Telegram ===
+[Telegram] chat=alice | **Urgent notification** | [URGENT] Server CPU is above 95%.
+
+=== 2. Encoded + Email ===
+[Email] To: alice@example.com
+Subject: Encoded notification
+WW91ciBvbmUtdGltZSBjb2RlIGlzIDQ4MjE=
+--
+Notification Gateway Team
+
+=== 3. Batch + SMS (one invalid recipient) ===
+[SMS] to=+77010000001 | Class begins at 10:00.
+[SMS] delivery failed
+[SMS] to=+77010000002 | Class begins at 10:00.
+Total: 3
+Successful: 2
+Failed: 1
+
+=== 4. Same object: Telegram -> Email ===
+[Telegram] chat=alice | **Urgent notification** | [URGENT] First transport: Telegram.
+[Email] To: alice@example.com
+Subject: Urgent notification
+[URGENT] Same object, now Email.
+--
+Notification Gateway Team
+
+=== 5. Telegram unavailable -> SMS fallback ===
+Trying fallback: SMS
+[SMS] to=+77010000001 | [URGENT] Service is down.
+
+=== 6. Marketing + Push ===
+[Push] device=device-42 | banner=[Special offer] [PROMO] 20% off today! | Reply STOP to unsubscribe.
+
+=== 7. Existing notification + Kafka ===
+[Kafka] topic=notifications | {"recipient":"operations","title":"Urgent notification","body":"[URGENT] Incident recorded."}
+
+=== 8. SMS length failure ===
+[SMS] delivery failed

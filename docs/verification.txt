@@ -1,0 +1,29 @@
+Verification performed on 2026-10-16
+
+Java: OpenJDK 17.0.20
+Compiler: Eclipse ECJ 3.39.0 with -17 and UTF-8 encoding
+Test runner: JUnit Platform Console Standalone 1.11.4 (JUnit Jupiter 5.11.4)
+
+Production source and test source compilation: successful.
+Runnable JAR: built from compiled Java 17 classes and executed successfully.
+All eight demo sections executed; see demo-output.txt.
+
+Test run finished after 175 ms
+[         4 containers found      ]
+[         0 containers skipped    ]
+[         4 containers started    ]
+[         0 containers aborted    ]
+[         4 containers successful ]
+[         0 containers failed     ]
+[        25 tests found           ]
+[         0 tests skipped         ]
+[        25 tests started         ]
+[         0 tests aborted         ]
+[        25 tests successful      ]
+[         0 tests failed          ]
+
+
+The environment did not provide Maven or javac executables.
+The source and tests were compiled with ECJ and executed on Java 17.
+The Maven configuration is included for standard JDK + Maven builds;
+Maven itself was not run in this environment.

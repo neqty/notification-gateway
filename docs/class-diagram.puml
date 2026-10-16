@@ -1,0 +1,53 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+abstract class Notification <<Abstraction>> {
+  # sender : MessageSender
+  # Notification(sender : MessageSender)
+  + setSender(sender : MessageSender) : void
+  {abstract} + send(recipient : String, message : String) : void
+}
+interface MessageSender <<Implementor>> {
+  + sendMessage(recipient : String, title : String, body : String) : boolean
+  + isAvailable() : boolean
+  + getChannelName() : String
+}
+class UrgentNotification <<Refined Abstraction>> {
+  - fallbacks : List<MessageSender>
+  + addFallback(fallback : MessageSender) : void
+  + wasLastDeliverySuccessful() : boolean
+}
+class EncryptedNotification <<Refined Abstraction>>
+class ScheduledBatchNotification <<Refined Abstraction>> {
+  - recipients : List<String>
+  + addRecipient(recipient : String) : void
+  + sendBatch(message : String) : BatchSummary
+  + getLastSummary() : BatchSummary
+}
+class MarketingNotification <<Refined Abstraction>>
+abstract class SimulatedMessageSender {
+  - available : boolean
+  - deliveries : List<SentMessage>
+  + setAvailable(available : boolean) : void
+  + getDeliveries() : List<SentMessage>
+}
+class TelegramMessageSender <<Concrete Implementor>>
+class EmailMessageSender <<Concrete Implementor>>
+class SmsMessageSender <<Concrete Implementor>> {
+  {static} + MAX_LENGTH : int = 160
+}
+class KafkaEventSender <<Concrete Implementor>>
+class PushNotificationSender <<Concrete Implementor>>
+Notification --> "1" MessageSender : Bridge / has-a
+Notification <|-- UrgentNotification
+Notification <|-- EncryptedNotification
+Notification <|-- ScheduledBatchNotification
+Notification <|-- MarketingNotification
+UrgentNotification --> "0..*" MessageSender : fallback
+MessageSender <|.. SimulatedMessageSender
+SimulatedMessageSender <|-- TelegramMessageSender
+SimulatedMessageSender <|-- EmailMessageSender
+SimulatedMessageSender <|-- SmsMessageSender
+SimulatedMessageSender <|-- KafkaEventSender
+SimulatedMessageSender <|-- PushNotificationSender
+@enduml
